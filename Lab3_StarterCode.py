@@ -98,7 +98,17 @@ def fit_zipf(c, kmin, kmax):
     fit_zipf(np.array([5000, 900, 400, 1]), 2, 3)
         returns (-2.0, 3600.0)
     """
-    return 0, 0
+    ranks = np.arange(kmin, kmax + 1)
+    selected_counts = c[kmin - 1:kmax]
+
+    x = np.log10(ranks)
+    y = np.log10(selected_counts)
+
+    m, b = np.polyfit(x, y, 1)
+
+    C = 10 ** b
+
+    return m, C
 
 # The n most common words, as a set
 def top_words(counts, n):
